@@ -1,5 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Prata&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
+*{
+    font-family: Outfit;
+}
+.prata-regular {
+    font-family: "Prata", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+/* Add this if layout issues persist */
+@layer utilities {
+    .center-absolute {
+      @apply absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2;
+    }
+  }

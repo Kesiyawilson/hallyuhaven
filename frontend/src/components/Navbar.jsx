@@ -24,21 +24,34 @@ const Navbar = () => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       const sidebar = document.querySelector('.sidebar');
+      const menuIcon = document.querySelector('.menu-icon');
+      const profileIcon = document.querySelector('.profile-icon');
+    
+      // Close sidebar if click is outside both sidebar and menu icon
       if (sidebar && !sidebar.contains(event.target)) {
-        const menuIcon = document.querySelector('.menu-icon');
         if (menuIcon && !menuIcon.contains(event.target)) {
           setShowSidebar(false);
         }
       }
+    
+      // Close dropdown if click is outside profile icon
+      if (showDropdown && profileIcon && !profileIcon.contains(event.target)) {
+        setShowDropdown(false);
+      }
     };
+    
 
-    if (showSidebar) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [showSidebar]);
+  }, [showSidebar, showDropdown]);
+
+  const toggleDropdown = () => {
+    if (isMobile) {
+      setShowDropdown(!showDropdown);
+    }
+  };
 
   return (
     <>
@@ -113,19 +126,22 @@ const Navbar = () => {
           />
           
           <div 
+            className="profile-icon"
             style={{ position: 'relative' }}
             onMouseEnter={() => !isMobile && setShowDropdown(true)}
             onMouseLeave={() => !isMobile && setShowDropdown(false)}
+            onClick={toggleDropdown}
           >
             <img 
               src={assets.profile_icon}
               style={{ width: '25px', height: 'auto', cursor: 'pointer' }} 
               alt="Profile" 
             />
-            {showDropdown && (
+            {(showDropdown || (isMobile && showDropdown)) && (
               <div style={{
-                position: 'absolute',
-                right: 0,
+                position: isMobile ? 'fixed' : 'absolute',
+                right: isMobile ? '20px' : 0,
+                top: isMobile ? '70px' : '100%',
                 backgroundColor: '#f8f8f8',
                 minWidth: '160px',
                 boxShadow: '0px 8px 16px 0px rgba(0,0,0,0.1)',
