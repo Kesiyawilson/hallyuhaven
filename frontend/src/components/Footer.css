@@ -1,0 +1,121 @@
+.footer-container {
+    background-color: #fff;
+    padding: 40px 20px 0;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 30px;
+    gap: 30px; /* Reduced space between columns */
+  }
+  
+  .footer-left {
+    flex: 1;
+    min-width: 300px;
+  }
+  
+  .footer-logo {
+    width: 150px;
+    margin-bottom: -20px; /* Reduced space between logo and text */
+  }
+  
+  .footer-text {
+    color: #666;
+    line-height: 1.6;
+    font-size: 14px;
+    margin-top: 0; /* Ensures no extra space above text */
+  }
+  
+  .footer-right-wrapper {
+    display: flex;
+    gap: 200px; /* Reduced space between right columns */
+  }
+  
+  .footer-right {
+    min-width: 150px;
+  }
+  
+  .footer-title {
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 16px;
+  }
+  
+  .footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer-links li {
+    margin-bottom: 10px;
+    color: #666;
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  
+  .footer-links li:hover {
+    color: #000;
+  }
+  
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 20px;
+  }
+  
+  .footer-divider {
+    border: none;
+    border-top: 1px solid #e1e1e1;
+    margin: 0;
+  }
+  
+  .copyright-text {
+    text-align: center;
+    color: #000;
+    font-size: 12px;
+    padding: 20px 0;
+    margin: 0;
+  }
+  
+  @media (max-width: 768px) {
+    .footer-content {
+      flex-direction: column;
+      gap: 20px;
+    }
+  
+    .footer-right-wrapper {
+      flex-direction: column; /* Stack right sections vertically */
+      gap: 30px;
+    }
+  
+    .footer-right {
+      margin-top: 0; /* Reset extra spacing */
+    }
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start; /* ✅ Ensures vertical alignment at the top */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 30px;
+    gap: 30px;
+  }
+  
+.footer-right,
+.footer-contact {
+  margin-top: 30px; /* Adjust value as needed */
+}
+
+  
+  

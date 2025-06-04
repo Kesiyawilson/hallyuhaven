@@ -1,0 +1,47 @@
+.latest-collections-container {
+    width: 100%;
+    padding: 60px 0;
+    background-color: #fff;
+}
+
+.latest-collections-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.latest-collections-description {
+    color: #666;
+    margin-bottom: 40px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.latest-products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.no-products {
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+    padding: 40px 0;
+}
+
+@media (max-width: 768px) {
+    .latest-products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 20px;
+    }
+    
+    .latest-collections-description {
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,45 @@
+.our-policy-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+  
+  .policy-card {
+    flex: 1;
+    min-width: 220px;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .policy-card img {
+    width: 48px;
+    margin-bottom: 16px;
+  }
+  
+  .policy-title {
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 6px;
+    font-size: 1rem;
+  }
+  
+  .policy-subtext {
+    color: #888;
+    font-size: 0.875rem;
+  }
+  
+  /* Mobile-friendly adjustment */
+  @media (max-width: 768px) {
+    .our-policy-section {
+      justify-content: center;
+    }
+  }
+  

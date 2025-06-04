@@ -23,23 +23,23 @@ const Navbar = () => {
   // Close sidebar when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      const sidebar = document.querySelector('.sidebar');
-      const menuIcon = document.querySelector('.menu-icon');
-      const profileIcon = document.querySelector('.profile-icon');
-    
-      // Close sidebar if click is outside both sidebar and menu icon
-      if (sidebar && !sidebar.contains(event.target)) {
-        if (menuIcon && !menuIcon.contains(event.target)) {
-          setShowSidebar(false);
-        }
-      }
-    
-      // Close dropdown if click is outside profile icon
-      if (showDropdown && profileIcon && !profileIcon.contains(event.target)) {
-        setShowDropdown(false);
-      }
-    };
-    
+  const sidebar = document.querySelector('.sidebar');
+  const menuIcon = document.querySelector('.menu-icon');
+  const profileIcon = document.querySelector('.profile-icon');
+
+  // Close sidebar if click is outside both sidebar and menu icon
+  if (sidebar && !sidebar.contains(event.target)) {
+    if (menuIcon && !menuIcon.contains(event.target)) {
+      setShowSidebar(false);
+    }
+  }
+
+  // Close dropdown if click is outside profile icon
+  if (showDropdown && profileIcon && !profileIcon.contains(event.target)) {
+    setShowDropdown(false);
+  }
+};
+
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
@@ -59,22 +59,27 @@ const Navbar = () => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: '1px 40px',
+        padding: '0px 40px',
         maxWidth: '1200px',
         margin: '0 auto',
         width: '100%',
         backgroundColor: 'white',
-        position: 'relative'
+        position: 'relative',
+        borderBottom: '1px solid #e0e0e0',
+
       }}>
         
         {/* Left - Logo */}
         <div style={{ flex: '1' }}>
-          <img 
-            src={assets.logo} 
-            style={{ width: '160px', height: 'auto' }} 
-            alt="Hallyu Haven" 
-          />
+          <NavLink to="/" style={{ textDecoration: 'none' }}>
+            <img 
+              src={assets.logo} 
+              style={{ width: '160px', height: 'auto', cursor: 'pointer' }} 
+              alt="Hallyu Haven" 
+            />
+          </NavLink>
         </div>
+
 
         {/* Center - Navigation Links - Hidden on mobile */}
         {!isMobile && (
@@ -229,16 +234,15 @@ const Navbar = () => {
           position: 'fixed',
           top: 0,
           right: 0,
-          width: '75%',
-          height: '100vh',
+          bottom: 0, // 🔑 ensure it stretches to the bottom
+          left: 0,   // 🔑 make it full width
           backgroundColor: 'white',
-          boxShadow: '-2px 0 10px rgba(0,0,0,0.1)',
           zIndex: 1000,
-          transition: 'transform 0.3s ease-out',
-          transform: showSidebar ? 'translateX(0)' : 'translateX(100%)',
           display: 'flex',
-          flexDirection: 'column'
+          flexDirection: 'column',
+          overflowY: 'auto', // allows scrolling if content overflows
         }}>
+        
           {/* Back Button */}
           <div style={{
             display: 'flex',
@@ -273,24 +277,28 @@ const Navbar = () => {
             gap: '20px'
           }}>
             {['/', '/collection', '/about', '/contact'].map((path, i) => {
-              const labels = ['HOME', 'COLLECTION', 'ABOUT', 'CONTACT'];
-              return (
-                <NavLink 
-                  key={path}
-                  to={path}
-                  style={({ isActive }) => ({ 
-                    color: isActive ? '#000' : '#666',
-                    textDecoration: 'none',
-                    fontSize: '18px',
-                    fontWeight: '500',
-                    padding: '8px 0'
-                  })}
-                  onClick={() => setShowSidebar(false)}
-                >
-                  {labels[i]}
-                </NavLink>
-              );
-            })}
+  const labels = ['HOME', 'COLLECTION', 'ABOUT', 'CONTACT'];
+  return (
+    <NavLink 
+      key={path}
+      to={path}
+      className="nav-link"
+      style={({ isActive }) => ({ 
+        color: isActive ? '#fff' : '#666',
+        backgroundColor: isActive ? 'black' : 'transparent',
+        textDecoration: 'none',
+        fontSize: '18px',
+        fontWeight: '500',
+        padding: '8px 16px',
+        borderRadius: '4px',
+      })}
+      onClick={() => setShowSidebar(false)}
+    >
+      {labels[i]}
+    </NavLink>
+  );
+})}
+
           </div>
         </div>
       )}

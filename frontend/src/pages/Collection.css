@@ -1,0 +1,81 @@
+.collection-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 40px 0;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .filter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    margin-left: 20px;
+    padding-bottom: 15px;
+  }
+  
+  .filter-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .dropdown-icon {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+  }
+  
+  .dropdown-icon.rotated {
+    transform: rotate(90deg);
+  }
+  
+  .unified-filter-box {
+    margin-left: 20px;
+    max-width: 280px; /* Limits width nicely around the text */
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  
+  .category-section {
+    margin-bottom: 20px;
+  }
+  
+  .category-heading {
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #444;
+  }
+  
+  .subcategory-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 10px;
+  }
+  
+  .subcategory-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .subcategory-item input {
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    .collection-container {
+      padding: 20px 20px 0;
+    }
+  
+    .unified-filter-box {
+      margin-top: 10px;
+    }
+  }
+  
+  
