@@ -1,67 +1,93 @@
-import React, { useState } from "react";
-import { X } from "lucide-react";
+import React, { useContext } from "react";
+import { ShopContext } from "../context/ShopContext";
+import { assets } from "../assets/assets"; // ✅ Make sure this path is correct
 
-const SearchBar = ({ products }) => {
-  const [query, setQuery] = useState("");
+const SearchBar = ({ setIsSearchVisible }) => {
+  const { search, setSearch } = useContext(ShopContext);
 
-  const clearQuery = () => setQuery("");
-
-  // Filter products based on the query (example filter)
-  const filteredProducts = products.filter(product =>
-    product.name.toLowerCase().includes(query.toLowerCase())
-  );
+  const clearSearch = () => {
+    setSearch("");
+    setIsSearchVisible(false); // Hide search bar on close
+  };
 
   return (
-    <div className="w-full max-w-md mx-auto mt-4">
-      <div className="relative flex items-center">
-        {/* Search icon image inside the input box */}
+    <div
+      style={{
+        width: "100%",
+        maxWidth: "1200px",
+        margin: "0 auto",
+        padding: "15px 40px",
+        backgroundColor: "white",
+        borderBottom: "1px solid #e0e0e0",
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          width: "100%",
+          maxWidth: "600px",
+          border: "1px solid #ddd",
+          borderRadius: "25px",
+          padding: "8px 15px",
+          position: "relative",
+        }}
+      >
+        {/* Search icon inside input */}
         <img
-          src="/search_icon.png"
+          src={assets.search_icon}
           alt="Search"
-          className="absolute left-3 h-5 w-5 pointer-events-none"
+          style={{
+            position: "absolute",
+            left: "15px",
+            width: "16px",
+            height: "16px",
+            pointerEvents: "none",
+            userSelect: "none",
+          }}
         />
 
         <input
           type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
           placeholder="Search products..."
-          className="w-full rounded-md border border-gray-300 py-2 pl-10 pr-3 text-sm shadow-sm
-            focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          autoFocus
+          style={{
+            flex: 1,
+            border: "none",
+            outline: "none",
+            background: "transparent",
+            fontSize: "14px",
+            paddingLeft: "40px",
+          }}
         />
 
-        {/* Cross icon outside the input box to clear */}
-        {query && (
-          <button
-            type="button"
-            onClick={clearQuery}
-            className="ml-2 text-gray-500 hover:text-gray-700"
-            aria-label="Clear search"
-          >
-            <X className="h-5 w-5" />
-          </button>
-        )}
+        {/* Close (cross) button to the right */}
+        <button
+          onClick={clearSearch}
+          style={{
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            marginLeft: "10px",
+            display: "flex",
+            alignItems: "center",
+          }}
+          aria-label="Close search"
+        >
+          <img
+            src={assets.cross_icon}
+            alt="Close"
+            style={{ width: "16px", height: "16px" }}
+          />
+        </button>
       </div>
-
-      {/* Example: Show filtered product names */}
-      <ul className="mt-2 max-h-40 overflow-y-auto border border-gray-200 rounded-md p-2">
-        {filteredProducts.length > 0 ? (
-          filteredProducts.map((product) => (
-            <li key={product.id} className="text-gray-700 py-1 border-b last:border-b-0">
-              {product.name}
-            </li>
-          ))
-        ) : (
-          <li className="text-gray-500">No products found.</li>
-        )}
-      </ul>
     </div>
   );
 };
 
 export default SearchBar;
-
-
-
-
 

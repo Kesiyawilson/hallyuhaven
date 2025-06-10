@@ -1,9 +1,11 @@
 import React from 'react';
 import './Title.css';
 
-const Title = ({ text1, text2 }) => {
+// Add 'alignment' to your props
+const Title = ({ text1, text2, alignment }) => {
   return (
-    <div className="title-container">
+    // Conditionally add a class based on the 'alignment' prop
+    <div className={`title-container ${alignment === 'left' ? 'align-left' : ''}`}>
       <h2 className="title-text prata-regular">
         <span className="text1">{text1}</span>
         <span className="text2">{text2}</span>

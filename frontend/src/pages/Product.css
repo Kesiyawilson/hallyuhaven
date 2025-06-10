@@ -1,0 +1,157 @@
+.product-section {
+    padding-top: 4rem;
+  }
+  
+  .product-display-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    margin-left: 2rem;
+    align-items: flex-start;
+    margin-bottom: 7rem;
+  }
+  
+  .product-thumbs-container {
+    display: flex;
+    flex-direction: column;
+    margin-right: 1rem;
+  }
+  
+  .product-thumb {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 1.5rem;
+    flex-shrink: 0;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 2px solid transparent;
+  }
+  
+  .product-main-image-container img {
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  .product-title-container {
+    align-self: flex-start;
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+    white-space: nowrap; /* prevents wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis; /* optional: adds "..." if it's too long */
+  }
+  
+  .product-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.3;
+  }
+  
+  .size-selector {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  
+  .size-button {
+    padding: 0.5rem 1rem;
+    background-color: #f3f4f6; /* Tailwind's bg-gray-100 */
+    border: 1px solid transparent;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: border 0.2s;
+  }
+  
+  .size-button.active {
+    border: 2px solid #f97316; /* Tailwind's orange-500 */
+  }
+  .add-to-cart-button {
+    background-color: black;
+    color: white;
+    padding: 1rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    margin-top: 2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-to-cart-button:active {
+    background-color: #333;
+  }
+  .add-to-cart-button {
+    background-color: black;
+    color: white;
+    padding: 1rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    margin-top: 2rem;
+    margin-bottom: 2rem; /* <-- This creates space before <hr> */
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-to-cart-button:active {
+    background-color: #333;
+  }
+  
+  .product-divider {
+    border: none;
+    height: 1px;
+    background-color: #e5e7eb; /* Lighter grey than before */
+    width: 90%;                /* Wider line */
+    margin: 0 auto;            /* Center the line horizontally */
+  }
+  .light-gray-text {
+    color:#6B7280; /* Very light grey */
+    font-size: 0.875rem; /* Optional: small text size (same as Tailwind's text-sm) */
+    margin-top: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    line-height: 0;
+  }
+  .description-review-container {
+    display: flex;
+    gap: 0;
+    margin-left: 2rem;
+  }
+  
+  .description-box,
+  .review-box {
+    border: 1px solid #ccc;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  
+  .description-box {
+    color: black;
+    border-right: none; /* connects visually to the next box */
+  }
+  
+  .review-box {
+    color: #6b7280; /* gray text */
+  }
+  
+  .description-paragraph-box {
+    border: 1px solid #ccc;
+    padding: 1rem 1.5rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin-left: 2rem;
+    margin-top: 0; /* remove space between boxes */
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* reduced space between paragraphs */
+    border-radius: 0;
+    background-color: white;
+  }
+  

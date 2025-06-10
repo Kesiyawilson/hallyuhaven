@@ -4,372 +4,319 @@ import { assets } from '../assets/assets';
 import { ShopContext } from '../context/ShopContext';
 
 const Navbar = () => {
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [cartItemsCount, setCartItemsCount] = useState(3);
-  const [isMobile, setIsMobile] = useState(false);
-  const [showSidebar, setShowSidebar] = useState(false);
-  const [search, setSearch] = useState('');
-  const { showSearch, setShowSearch } = useContext(ShopContext);
+    const [showDropdown, setShowDropdown] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+    const [showSidebar, setShowSidebar] = useState(false); // State for controlling sidebar visibility
+    // Removed isSearchVisible from useContext as it will always be true or controlled differently
+    const { search, setSearch, setIsSearchVisible, getCartCount } = useContext(ShopContext);
+    const location = useLocation();
 
-  // Get current route path
-  const location = useLocation();
+    // State to manage search bar visibility
+    const [isSearchInputVisible, setIsSearchInputVisible] = useState(false);
 
-  // Handle screen resize to toggle mobile/desktop layout
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        handleResize(); // Set initial state
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            const sidebar = document.querySelector('.sidebar');
+            const menuIcon = document.querySelector('.menu-icon'); // Select the menu icon
+            const profileIcon = document.querySelector('.profile-icon');
+            // Assuming search bar and its toggle are not within these elements for outside click detection
+
+            // Close sidebar if click is outside sidebar and menu icon
+            if (sidebar && !sidebar.contains(event.target) && menuIcon && !menuIcon.contains(event.target)) {
+                setShowSidebar(false);
+            }
+            // Close profile dropdown if click is outside dropdown and profile icon
+            if (showDropdown && profileIcon && !profileIcon.contains(event.target)) {
+                setShowDropdown(false);
+            }
+
+            // You might want to close the search input when clicking outside it too,
+            // but the current structure might need specific refactoring for that.
+            // For now, we're focusing on keeping the icon present.
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [showDropdown, showSidebar]);
+
+    const toggleDropdown = () => {
+        setShowDropdown(prev => !prev);
     };
-    checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
-    return () => window.removeEventListener('resize', checkScreenSize);
-  }, []);
 
-  // Handle clicks outside dropdown/sidebar to close them
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      const sidebar = document.querySelector('.sidebar');
-      const menuIcon = document.querySelector('.menu-icon');
-      const profileIcon = document.querySelector('.profile-icon');
-
-      if (sidebar && !sidebar.contains(event.target) && menuIcon && !menuIcon.contains(event.target)) {
-        setShowSidebar(false);
-      }
-      if (showDropdown && profileIcon && !profileIcon.contains(event.target)) {
-        setShowDropdown(false);
-      }
+    const toggleSidebar = () => {
+        setShowSidebar(prev => !prev);
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [showSidebar, showDropdown]);
 
-  const toggleDropdown = () => {
-    if (isMobile) {
-      setShowDropdown(!showDropdown);
-    }
-  };
+    const toggleSearchInput = () => {
+        setIsSearchInputVisible(prev => !prev);
+        // Clear search when closing the input
+        if (isSearchInputVisible) {
+            setSearch('');
+        }
+    };
 
-  return (
-    <>
-      {/* Navbar container */}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: '0px 40px',
-          maxWidth: '1200px',
-          margin: '0 auto',
-          width: '100%',
-          backgroundColor: 'white',
-          position: 'relative',
-          borderBottom: '1px solid #e0e0e0',
-        }}
-      >
-        {/* Left: Logo */}
-        <div style={{ flex: '1' }}>
-          <NavLink to="/" style={{ textDecoration: 'none' }}>
-            <img
-              src={assets.logo}
-              style={{ width: '160px', height: 'auto', cursor: 'pointer' }}
-              alt="Hallyu Haven"
-            />
-          </NavLink>
-        </div>
 
-        {/* Center: Nav links for desktop */}
-        {!isMobile && (
-          <div
-            style={{
-              position: 'absolute',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              display: 'flex',
-              gap: '30px',
-              zIndex: 1,
-            }}
-          >
-            {['/', '/collection', '/about', '/contact'].map((path, i) => {
-              const labels = ['HOME', 'COLLECTION', 'ABOUT', 'CONTACT'];
-              return (
-                <NavLink
-                  key={path}
-                  to={path}
-                  style={({ isActive }) => ({
-                    color: isActive ? '#000' : '#666',
-                    textDecoration: 'none',
-                    fontSize: '16px',
-                    fontWeight: '500',
-                    paddingBottom: '4px',
-                    borderBottom: isActive ? '1.5px solid #000' : 'none',
-                    position: 'relative',
-                    zIndex: 2,
-                  })}
-                >
-                  {labels[i]}
-                </NavLink>
-              );
-            })}
-          </div>
-        )}
+    // Array for navigation links to avoid repetition
+    const navLinks = [
+        { path: '/', label: 'HOME' },
+        { path: '/collection', label: 'COLLECTION' },
+        { path: '/about', label: 'ABOUT' },
+        { path: '/contact', label: 'CONTACT' },
+    ];
 
-        {/* Right: Icons */}
-        <div
-          style={{
-            flex: '1',
-            display: 'flex',
-            justifyContent: 'flex-end',
-            gap: '20px',
-            alignItems: 'center',
-          }}
-        >
-          {/* Search icon only on /collection page */}
-          {location.pathname === '/collection' && (
-            <img
-              onClick={() => setShowSearch(true)}
-              src={assets.search_icon}
-              style={{
-                width: '25px',
-                height: 'auto',
-                cursor: 'pointer',
-                display: showSearch ? 'none' : 'block',
-              }}
-              alt="Search"
-            />
-          )}
+    const currentCartCount = getCartCount(); // Get the current cart count from context
 
-          {/* Profile icon and dropdown */}
-          <div
-            className="profile-icon"
-            style={{ position: 'relative' }}
-            onMouseEnter={() => !isMobile && setShowDropdown(true)}
-            onMouseLeave={() => !isMobile && setShowDropdown(false)}
-            onClick={toggleDropdown}
-          >
-            <img
-              src={assets.profile_icon}
-              style={{ width: '25px', height: 'auto', cursor: 'pointer' }}
-              alt="Profile"
-            />
-            {(showDropdown || (isMobile && showDropdown)) && (
-              <div
-                style={{
-                  position: isMobile ? 'fixed' : 'absolute',
-                  right: isMobile ? '20px' : 0,
-                  top: isMobile ? '70px' : '100%',
-                  backgroundColor: '#f8f8f8',
-                  minWidth: '160px',
-                  boxShadow: '0px 8px 16px rgba(0,0,0,0.1)',
-                  zIndex: 10,
-                  borderRadius: '4px',
-                  overflow: 'hidden',
-                }}
-              >
-                {['My Profile', 'Orders', 'Logout'].map((item) => (
-                  <div
-                    key={item}
-                    style={{
-                      padding: '12px 16px',
-                      color: '#555',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = '#000')}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = '#555')}
-                  >
-                    {item}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+    return (
+        <>
+            {/* Main Navbar Container */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0px 40px', maxWidth: '1200px', margin: '0 auto', width: '100%', backgroundColor: 'white', borderBottom: '1px solid #e0e0e0', height: '80px' }}>
+                {/* Logo Section */}
+                <div style={{ flex: '1' }}>
+                    <NavLink to="/">
+                        <img src={assets.logo} alt="Logo" style={{ width: '160px' }} />
+                    </NavLink>
+                </div>
 
-          {/* Cart icon with count */}
-          <div style={{ position: 'relative', cursor: 'pointer' }}>
-            <img src={assets.cart_icon} style={{ width: '25px', height: 'auto' }} alt="Cart" />
-            {cartItemsCount > 0 && (
-              <div
-                style={{
-                  position: 'absolute',
-                  bottom: '-5px',
-                  right: '-5px',
-                  backgroundColor: 'black',
-                  color: 'white',
-                  borderRadius: '50%',
-                  width: '18px',
-                  height: '18px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  fontSize: '10px',
-                  fontWeight: 'bold',
-                }}
-              >
-                {cartItemsCount}
-              </div>
-            )}
-          </div>
+                {/* Desktop Navigation Links */}
+                {!isMobile && (
+                    <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '30px' }}>
+                        {navLinks.map((link) => (
+                            <NavLink
+                                key={link.path}
+                                to={link.path}
+                                style={({ isActive }) => ({
+                                    color: isActive ? '#000' : '#666',
+                                    fontWeight: 500,
+                                    textDecoration: 'none',
+                                    borderBottom: isActive ? '2px solid black' : 'none',
+                                    paddingBottom: '4px',
+                                    transition: 'color 0.3s, border-bottom 0.3s',
+                                    whiteSpace: 'nowrap' // Prevent wrapping
+                                })}
+                            >
+                                {link.label}
+                            </NavLink>
+                        ))}
+                    </div>
+                )}
 
-          {/* Mobile menu icon */}
-          {isMobile && (
-            <div
-              className="menu-icon"
-              style={{ cursor: 'pointer' }}
-              onClick={() => setShowSidebar(true)}
-            >
-              <img src={assets.menu_icon} style={{ width: '25px', height: 'auto' }} alt="Menu" />
+                {/* Right Section: Icons */}
+                <div style={{ flex: '1', display: 'flex', justifyContent: 'flex-end', gap: '20px', alignItems: 'center' }}>
+
+                    {/* ALWAYS SHOW SEARCH ICON */}
+                    <img
+                        onClick={toggleSearchInput} // Toggle the search input visibility
+                        src={assets.search_icon}
+                        alt="Search"
+                        style={{
+                            width: '25px',
+                            cursor: 'pointer',
+                            // The icon itself is now always visible, it just toggles the input bar
+                        }}
+                    />
+
+
+                    {/* Profile Icon and Dropdown */}
+                    <div className="profile-icon" onClick={toggleDropdown} style={{ position: 'relative', cursor: 'pointer' }}>
+                        <img src={assets.profile_icon} alt="Profile" style={{ width: '25px' }} />
+                        {showDropdown && (
+                            <div style={{
+                                position: 'absolute',
+                                top: '100%',
+                                right: 0,
+                                background: '#fff',
+                                boxShadow: '0 0 5px rgba(0,0,0,0.1)',
+                                borderRadius: '4px',
+                                minWidth: '120px',
+                                zIndex: 100 // Ensure dropdown is above other content
+                            }}>
+                                {['My Profile', 'Orders', 'Logout'].map((item) => (
+                                    <div key={item} style={{
+                                        padding: '10px 15px',
+                                        cursor: 'pointer',
+                                        color: '#555',
+                                        whiteSpace: 'nowrap'
+                                    }}>{item}</div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Cart Icon with Item Count - Now wrapped in NavLink */}
+                    <NavLink to="/cart" style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <div style={{ position: 'relative', cursor: 'pointer' }}>
+                            <img src={assets.cart_icon} alt="Cart" style={{ width: '25px' }} />
+                            {currentCartCount > 0 && (
+                                <div style={{
+                                    position: 'absolute',
+                                    bottom: '-5px',
+                                    right: '-5px',
+                                    backgroundColor: 'black',
+                                    color: 'white',
+                                    borderRadius: '50%',
+                                    width: '18px',
+                                    height: '18px',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    fontSize: '10px'
+                                }}>
+                                    {currentCartCount}
+                                </div>
+                            )}
+                        </div>
+                    </NavLink>
+
+                    {/* Hamburger Menu Icon (Mobile Only) */}
+                    {isMobile && (
+                        <div className="menu-icon" onClick={toggleSidebar} style={{ cursor: 'pointer', marginLeft: '10px' }}>
+                            <img src={assets.menu_icon} alt="Menu" style={{ width: '25px' }} />
+                        </div>
+                    )}
+                </div>
             </div>
-          )}
-        </div>
-      </div>
 
-      {/* Search bar below navbar - only on /collection page and when showSearch is true */}
-      {location.pathname === '/collection' && showSearch && (
-        <div
-          style={{
-            width: '100%',
-            maxWidth: '1200px',
-            margin: '0 auto',
-            padding: '15px 40px',
-            backgroundColor: 'white',
-            borderBottom: '1px solid #e0e0e0',
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              width: '100%',
-              maxWidth: '600px',
-              border: '1px solid #ddd',
-              borderRadius: '25px',
-              padding: '8px 15px',
-              position: 'relative',
-            }}
-          >
-            {/* Search icon inside input */}
-            <img
-              src={assets.search_icon}
-              alt="Search"
-              style={{
-                position: 'absolute',
-                left: '15px',
-                width: '16px',
-                height: '16px',
-                pointerEvents: 'none',
-                userSelect: 'none',
-              }}
-            />
-
-            <input
-              autoFocus
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              style={{
-                flex: 1,
-                border: 'none',
-                outline: 'none',
-                background: 'transparent',
-                fontSize: '14px',
-                paddingLeft: '40px',
-              }}
-              type="text"
-              placeholder="Search products..."
-            />
-
-            {/* Close (cross) button */}
-            <button
-              onClick={() => {
-                setShowSearch(false);
-                setSearch('');
-              }}
-              style={{
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                marginLeft: '10px',
-                display: 'flex',
-                alignItems: 'center',
-              }}
-              aria-label="Close search"
-            >
-              <img
-                src={assets.cross_icon}
-                alt="Close"
-                style={{ width: '16px', height: '16px' }}
-              />
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Mobile sidebar */}
-      {isMobile && showSidebar && (
-        <div
-          className="sidebar"
-          style={{
-            position: 'fixed',
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-            backgroundColor: 'white',
-            zIndex: 1000,
-            display: 'flex',
-            flexDirection: 'column',
-            overflowY: 'auto',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'flex-start',
-              padding: '20px',
-              borderBottom: '1px solid #eee',
-            }}
-          >
-            <button
-              onClick={() => setShowSidebar(false)}
-              style={{
-                background: 'none',
-                border: 'none',
-                fontSize: '18px',
-                cursor: 'pointer',
-              }}
-              aria-label="Close sidebar"
-            >
-              &times;
-            </button>
-          </div>
-          <nav
-            style={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: '20px' }}
-          >
-            {['/', '/collection', '/about', '/contact'].map((path, i) => {
-              const labels = ['HOME', 'COLLECTION', 'ABOUT', 'CONTACT'];
-              return (
-                <NavLink
-                  key={path}
-                  to={path}
-                  style={({ isActive }) => ({
-                    color: isActive ? '#000' : '#666',
-                    textDecoration: 'none',
-                    fontSize: '16px',
-                    fontWeight: '500',
-                    paddingBottom: '4px',
-                    borderBottom: isActive ? '1.5px solid #000' : 'none',
-                  })}
-                  onClick={() => setShowSidebar(false)}
+            {/* Search Bar - NOW ALWAYS VISIBLE WHEN TOGGLED */}
+            {isSearchInputVisible && ( // Use isSearchInputVisible state
+                <div
+                    style={{
+                        width: '100%',
+                        maxWidth: '1200px',
+                        margin: '0 auto',
+                        padding: '15px 40px',
+                        backgroundColor: 'white',
+                        borderBottom: '1px solid #e0e0e0',
+                        display: 'flex',
+                        justifyContent: 'center',
+                    }}
                 >
-                  {labels[i]}
-                </NavLink>
-              );
-            })}
-          </nav>
-        </div>
-      )}
-    </>
-  );
+                    <div
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            width: '100%',
+                            maxWidth: '600px',
+                            border: '1px solid #ddd',
+                            borderRadius: '25px',
+                            padding: '8px 15px',
+                            position: 'relative',
+                            backgroundColor: 'white',
+                        }}
+                    >
+                        {/* Search icon inside input */}
+                        <img
+                            src={assets.search_icon}
+                            alt="Search"
+                            style={{
+                                position: 'absolute',
+                                left: '15px',
+                                width: '16px',
+                                height: '16px',
+                                pointerEvents: 'none',
+                                userSelect: 'none',
+                            }}
+                        />
+
+                        <input
+                            autoFocus
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            style={{
+                                flex: 1,
+                                border: 'none',
+                                outline: 'none',
+                                background: 'transparent',
+                                fontSize: '14px',
+                                paddingLeft: '40px',
+                            }}
+                            type="text"
+                            placeholder="Search products..."
+                        />
+                    </div>
+
+                    {/* Cross icon outside the input box */}
+                    <button
+                        onClick={() => {
+                            setSearch('');
+                            setIsSearchInputVisible(false); // Close the search input
+                        }}
+                        style={{
+                            background: 'none',
+                            border: 'none',
+                            marginLeft: '10px',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                        }}
+                        aria-label="Close Search"
+                    >
+                        <img
+                            src={assets.cross_icon}
+                            alt="Close"
+                            style={{
+                                width: '18px',
+                                height: '18px',
+                            }}
+                        />
+                    </button>
+                </div>
+            )}
+
+            {/* Mobile Sidebar */}
+            {isMobile && showSidebar && (
+                <div className="sidebar" style={{
+                    position: 'fixed',
+                    top: '80px', // Below the Navbar
+                    right: 0,
+                    width: '250px',
+                    height: 'calc(100vh - 80px)', // Full height minus navbar
+                    background: '#fff',
+                    boxShadow: '-2px 0 5px rgba(0,0,0,0.1)',
+                    zIndex: 99, // Below profile dropdown, above main content
+                    display: 'flex',
+                    flexDirection: 'column',
+                    padding: '20px',
+                    gap: '15px',
+                    animation: 'slideInRight 0.3s forwards' // Optional: add a slide-in animation
+                }}>
+                    {navLinks.map((link) => (
+                        <NavLink
+                            key={link.path}
+                            to={link.path}
+                            onClick={() => setShowSidebar(false)} // Close sidebar on link click
+                            style={({ isActive }) => ({
+                                color: isActive ? '#000' : '#666',
+                                fontWeight: 500,
+                                textDecoration: 'none',
+                                padding: '10px 0',
+                                borderBottom: '1px solid #eee', // Separator for links
+                                transition: 'color 0.3s'
+                            })}
+                        >
+                            {link.label}
+                        </NavLink>
+                    ))}
+                </div>
+            )}
+
+            {/* Optional: Add CSS for slideInRight animation if desired */}
+            <style jsx>{`
+                @keyframes slideInRight {
+                    from { transform: translateX(100%); }
+                    to { transform: translateX(0); }
+                }
+            `}</style>
+        </>
+    );
 };
 
 export default Navbar;

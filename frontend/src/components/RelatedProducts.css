@@ -1,0 +1,32 @@
+.related-products-section {
+    margin: 6rem 0;
+    padding: 0 2rem;
+  }
+  
+  .related-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
+  }
+  
+  .related-products-grid {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .related-product-card {
+    width: 180px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .related-product-card:hover {
+    transform: scale(1.05);
+  }
+  

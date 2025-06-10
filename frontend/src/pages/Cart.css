@@ -1,0 +1,122 @@
+/* Overall cart page container */
+.cart-page-container {
+    border-top: 1px solid #e0e0e0;
+    padding-top: 3.5rem; /* equivalent to pt-14 */
+}
+
+/* Container for the cart title */
+.cart-title-wrapper {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0.75rem;
+    padding-left: 1rem;
+}
+
+/* Style for the actual title text (the H2 tag if you replaced Title component) */
+.cart-main-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+}
+
+/* Container for all individual cart items */
+.cart-items-wrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Styling for each individual product item in the cart */
+.cart-item-display {
+    padding: 1rem 0;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem; /* Gap between image, product details, and cart actions */
+}
+
+/* Specific styling for the very first cart item's top border */
+.cart-items-wrapper > .cart-item-display:first-child {
+    border-top: none;
+}
+
+/* Styling for the product image within the cart item */
+.cart-product-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0; /* Prevent image from shrinking */
+}
+
+/* NEW: Wrapper for product name, price, and size. Takes available space. */
+.cart-product-details { /* Renamed selector from .cart-item-info */
+    display: flex;
+    flex-direction: column; /* Stack name, price/size vertically */
+    flex-grow: 1; /* Allow this section to take up available space */
+    gap: 0.5rem; /* Gap between elements within this info section */
+}
+
+/* Styling for the product name text */
+.cart-product-name p {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Style for the quantity input box */
+.cart-quantity-input {
+    width: 45px;
+    height: 30px;
+    padding: 2px 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    text-align: center;
+    font-size: 0.9rem;
+    outline: none;
+    flex-shrink: 0; /* Prevent input from shrinking */
+}
+
+/* NEW: Container for Quantity Input and Bin Icon */
+.cart-actions {
+    display: flex;
+    align-items: center; /* Align items vertically in the middle */
+    gap: 1rem; /* Space between the quantity input and the bin icon */
+    flex-shrink: 0; /* Prevent this container from shrinking */
+}
+
+/* Style for the bin icon */
+.cart-bin-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    /* margin-left: auto; REMOVED this as gap in cart-actions now handles spacing */
+    flex-shrink: 0;
+}
+
+
+/* Responsive adjustments for larger screens (sm breakpoint) */
+@media (min-width: 640px) {
+    .cart-product-image {
+        width: 80px;
+        height: 80px;
+    }
+    .cart-product-name p {
+        font-size: 1rem;
+    }
+    .cart-quantity-input {
+        width: 60px;
+        font-size: 1rem;
+    }
+    .cart-bin-icon {
+        width: 24px;
+        height: 24px;
+    }
+}
