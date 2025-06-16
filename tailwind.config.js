@@ -37,4 +37,3 @@ export default {
     require('@tailwindcss/typography'), // For prose content
   ],
 }
-
