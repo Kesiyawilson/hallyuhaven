@@ -28,3 +28,4 @@ const ProductItem = ({ id, image, name, price }) => {
 }
 
 export default ProductItem
+

@@ -52,3 +52,4 @@ const LatestCollections = () => {
 }
 
 export default LatestCollections
+
