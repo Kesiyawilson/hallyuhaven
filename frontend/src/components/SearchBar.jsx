@@ -91,4 +91,3 @@ const SearchBar = ({ setIsSearchVisible }) => {
 
 export default SearchBar;
 
-

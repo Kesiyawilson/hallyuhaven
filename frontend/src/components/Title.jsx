@@ -17,4 +17,3 @@ const Title = ({ text1, text2, alignment }) => {
 
 export default Title;
 
-
