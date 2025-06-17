@@ -2,12 +2,13 @@ import React, { useState, useEffect, useContext } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { assets } from '../assets/assets';
 import { ShopContext } from '../context/ShopContext';
+import { toast } from 'react-toastify'; 
 
 const Navbar = () => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
     const [showSidebar, setShowSidebar] = useState(false);
-    const { search, setSearch, getCartCount } = useContext(ShopContext);
+    const { search, setSearch, getCartCount, navigate, token, setToken, setCartItems } = useContext(ShopContext);
     const [isSearchInputVisible, setIsSearchInputVisible] = useState(false);
 
     useEffect(() => {
@@ -51,6 +52,23 @@ const Navbar = () => {
         }
     };
 
+    const handleLogout = () => {
+        try {
+            navigate('/login')
+            localStorage.removeItem('token')
+            if (setToken && typeof setToken === 'function') {
+                setToken('');
+            }
+            setCartItems({});
+            setShowDropdown(false);
+            toast.success('Logged out successfully');       
+            
+        } catch (error) {
+            console.error('Logout error:', error);
+            toast.error('Error during logout');
+        }
+    };
+
     const navLinks = [
         { path: '/', label: 'HOME' },
         { path: '/collection', label: 'COLLECTION' },
@@ -58,7 +76,8 @@ const Navbar = () => {
         { path: '/contact', label: 'CONTACT' },
     ];
 
-    const currentCartCount = getCartCount();
+    // Safe cart count calculation
+    const currentCartCount = getCartCount && typeof getCartCount === 'function' ? getCartCount() : 0;
 
     return (
         <>
@@ -112,21 +131,55 @@ const Navbar = () => {
                                 minWidth: '120px',
                                 zIndex: 100
                             }}>
-                                <Link to="/login" style={{
-                                    display: 'block',
-                                    padding: '10px 15px',
-                                    color: '#555',
-                                    textDecoration: 'none',
-                                    whiteSpace: 'nowrap'
-                                }}>Login</Link>
-                                {['My Profile', 'Orders', 'Logout'].map((item) => (
-                                    <div key={item} style={{
+                                {/* Show Login link only if user is not logged in */}
+                                {!token && (
+                                    <Link to="/login" style={{
+                                        display: 'block',
                                         padding: '10px 15px',
-                                        cursor: 'pointer',
                                         color: '#555',
-                                        whiteSpace: 'nowrap'
-                                    }}>{item}</div>
-                                ))}
+                                        textDecoration: 'none',
+                                        whiteSpace: 'nowrap',
+                                        borderBottom: '1px solid #eee'
+                                    }}>Login</Link>
+                                )}
+                                
+                                {/* Show these options only if user is logged in */}
+                                {token && (
+                                    <>
+                                        <Link to="/profile" style={{
+                                            display: 'block',
+                                            padding: '10px 15px',
+                                            color: '#555',
+                                            textDecoration: 'none',
+                                            whiteSpace: 'nowrap',
+                                            borderBottom: '1px solid #eee'
+                                        }}>My Profile</Link>
+                                        
+                                        <Link to="/orders" style={{
+                                            display: 'block',
+                                            padding: '10px 15px',
+                                            color: '#555',
+                                            textDecoration: 'none',
+                                            whiteSpace: 'nowrap',
+                                            borderBottom: '1px solid #eee'
+                                        }}>Orders</Link>
+                                        
+                                        <div 
+                                            onClick={handleLogout}
+                                            style={{
+                                                padding: '10px 15px',
+                                                cursor: 'pointer',
+                                                color: '#555',
+                                                whiteSpace: 'nowrap',
+                                                transition: 'background-color 0.2s'
+                                            }}
+                                            onMouseEnter={(e) => e.target.style.backgroundColor = '#f5f5f5'}
+                                            onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                                        >
+                                            Logout
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         )}
                     </div>
@@ -204,7 +257,7 @@ const Navbar = () => {
                 </div>
             )}
 
-            <style jsx>{`
+            <style>{`
                 @keyframes slideInRight {
                     from { transform: translateX(100%); }
                     to { transform: translateX(0); }

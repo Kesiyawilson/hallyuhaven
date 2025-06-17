@@ -125,7 +125,7 @@ export const products = [
     {
         _id: "prod003",
         name: "Seventeen Oversized T-shirt",
-        description: "Lightweight oversized t-shirt wiht a lose fit, perfect for warm weather. Made from breathable fabric.",
+        description: "Lightweight oversized t-shirt with a lose fit, perfect for warm weather. Made from breathable fabric.",
         price: 60,
         image: [p_img3, p_img3_1],
         category: "Women",

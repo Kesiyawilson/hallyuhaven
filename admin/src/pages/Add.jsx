@@ -13,7 +13,7 @@ const Add = ({ token }) => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("Men");
-  const [subCategory, setSubCategory] = useState("Topwear");
+  const [subCategory, setSubCategory] = useState("T-Shirts");
   const [bestseller, setBestseller] = useState(false);
   const [sizes, setSizes] = useState([]);
 
@@ -51,7 +51,7 @@ const Add = ({ token }) => {
         setPrice('');
         setSizes([]);
         setBestseller(false);
-        setSubCategory("Topwear");
+        setSubCategory("T-Shirts");
       } else {
         toast.error(response.data.message);
       }
@@ -107,10 +107,18 @@ const Add = ({ token }) => {
         </div>
         <div>
           <p className='mb-2'>Sub category</p>
-          <select onChange={(e) => setSubCategory(e.target.value)} className='w-full px-3 py-2'>
-            <option value="Topwear">Topwear</option>
+          <select onChange={(e) => setSubCategory(e.target.value)} value={subCategory} className='w-full px-3 py-2'>
+            <option value="Hoodies">Hoodies</option>
+            <option value="Photocards">Photocards</option>
+            <option value="LightSticks">LightSticks</option>
+            <option value="T-Shirts">T-Shirts</option>
+            <option value="Tops">Tops</option>
+            <option value="Plushies">Plushies</option>
+            <option value="Key-Chains">Key-Chains</option>
             <option value="Bottomwear">Bottomwear</option>
-            <option value="Winterwear">Winterwear</option>
+            <option value="Varsityjacket">Varsityjacket</option>
+             <option value="Sweaters">Sweaters</option>
+            
           </select>
         </div>
         <div>
