@@ -20,15 +20,7 @@ const Footer = () => {
         </div>
 
         <div className="footer-right-wrapper">
-          <div className="footer-right">
-            <p className="footer-title">COMPANY</p>
-            <ul className="footer-links">
-              <li>Home</li>
-              <li>About Us</li>
-              <li>Delivery</li>
-              <li>Privacy Policy</li>
-            </ul>
-          </div>
+          
 
           <div className="footer-right">
             <p className="footer-title">GET IN TOUCH</p>

@@ -66,17 +66,14 @@ const Product = () => {
 </h2>
 
 <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', marginBottom: '1rem' }}>
-            <img src={assets.star_icon} alt="star" style={{ width: '1rem', height: '1rem' }} />
-            <img src={assets.star_icon} alt="star" style={{ width: '1rem', height: '1rem' }} />
-            <img src={assets.star_icon} alt="star" style={{ width: '1rem', height: '1rem' }} />
-            <img src={assets.star_dull_icon} alt="star" style={{ width: '1rem', height: '1rem' }} />
-            <span style={{ marginLeft: '8px', fontSize: '16px', color: '#555' }}>(122)</span>
+            
+             
           </div>
           <p style={{ fontSize: '2rem', fontWeight: '500', marginTop: '1.25rem' }}>{currency}{productData.price}</p>
           <p style={{ color: '#6B7280', width: '80%', marginTop: '1.25rem' }}>
             {productData.description}
           </p>
-          {productData.sizes && productData.sizes.length > 0 ? ( // Display size selector only if sizes exist
+          {productData.sizes && productData.sizes.length > 0 ? ( 
           <div className='flex flex-col gap-4 my-8'>
             <p>Select Size</p>
             <div className="size-selector">
@@ -105,20 +102,7 @@ const Product = () => {
 
           </div>
         </div>
-        {/*description and review section */}
-        <div className="description-review-container">
-          <div className="description-box">Description</div>
-          <div className="review-box">Reviews (122)</div>
-        </div>
-
-        <div className="description-paragraph-box">
-          <p>
-            An e-commerce website is an online platform that facilitates the buying and selling of products or services over the internet. It serves as a virtual marketplace where businesses and individuals can showcase their products, interact with customers, and conduct transactions without the need for a physical presence. E-commerce websites have gained immense popularity due to their convenience, accessibility, and the global reach they offer.
-          </p>
-          <p>
-            E-commerce websites typically display products or services along with detailed descriptions, images, prices, and any available variations (e.g., sizes, colours). Each product usually has its own dedicated page with relevant information.
-          </p>
-        </div>
+        
       </div>
       {/*display related products */}
       <RelatedProducts category={productData.category} subCategory={productData.subCategory}/>

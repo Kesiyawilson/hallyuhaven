@@ -1,6 +1,5 @@
 import React from 'react';
 import Title from '../components/Title';
-import NewsletterBox from '../components/NewsletterBox';
 import { assets } from '../assets/assets';
 
 const About = () => {
@@ -18,8 +17,7 @@ const About = () => {
                 />
                 <div>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur blandit tempus porttitor.
-                        Donec id elit non mi porta gravida at eget metus. Cras mattis consectetur purus sit amet fermentum.
+                        We are an online store dedicated to selling high-quality K-Pop merchandise for fans around the world. From albums and posters to exclusive apparel, we bring your favorite idols closer to you. Shop officially inspired K-Pop merch, delivered with love
                     </p>
                     <p>
                         <b>Our Mission</b><br />
@@ -62,10 +60,7 @@ const About = () => {
                 </div>
             </div>
 
-            {/* NewsletterBox at the bottom */}
-            <div style={{ marginTop: '60px' }}>
-                <NewsletterBox />
-            </div>
+           
         </div>
     );
 };

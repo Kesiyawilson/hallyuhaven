@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Title from '../components/Title';
-import NewsletterBox from '../components/NewsletterBox';
 import { assets } from '../assets/assets';
 
 const Contact = () => {
@@ -37,28 +36,11 @@ const Contact = () => {
           <p>Willms Station<br />123 Fashion Avenue, New York, NY 10001</p>
           <p>Phone: +1-234-567-8900<br />Email: contact@foreverfashion.com</p>
           <p><b>Careers at Forever</b></p>
-          <p>Learn more about our team and job opportunities below.</p>
-          <button
-            onClick={handleClick}
-            style={{
-              marginTop: '15px',
-              padding: '10px 20px',
-              backgroundColor: isClicked ? '#333' : '#000', // darker gray when clicked
-              color: '#fff',
-              border: 'none',
-              borderRadius: '5px',
-              cursor: 'pointer',
-              transition: 'background-color 0.2s ease',
-            }}
-          >
-            Explore Jobs
-          </button>
+          <p>Learn more about our team and job opportunities by giving us a call.</p>
+          
         </div>
       </div>
 
-      <div className="newsletter-box" style={{ marginTop: '60px' }}>
-        <NewsletterBox />
-      </div>
     </div>
   );
 };

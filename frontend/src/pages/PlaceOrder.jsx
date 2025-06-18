@@ -27,6 +27,33 @@ const PlaceOrder = () => {
     const value=event.target.value 
     setFormData(data=>({...data,[name]:value}))
   }
+  const initPay=(order)=>{
+     const options={
+      key:import.meta.env.VITE_RAZORPAY_KEY_ID,
+      amount:order.amount,
+      currency:order.currency,
+      name:'Order Payment',
+      description:'Order Payment',
+      order_id:order.id,
+      receipt:order.receipt,
+      handler:async(response)=>{
+         console.log(response)
+         try {
+          const {data}=await axios.post(backendUrl+'/api/order/verifyRazorpay',response,{headers:{token}})
+          if(data.success){
+            navigate('/orders')
+            setCartItems({})
+          }
+         } catch (error) {
+          console.log(error)
+          toast.error(error.message)
+         }
+      }
+     }
+     const rzp=new window.Razorpay(options)
+     rzp.open()
+  }
+
   const onSubmitHandler=async(event)=>{
     event.preventDefault()
     try {
@@ -58,13 +85,19 @@ const PlaceOrder = () => {
            else{
             toast.error(response.data.message)
            }
-        break;
-
+          break;
+        case 'razorpay':
+          const responseRazorpay=await axios.post(backendUrl+'/api/order/razorpay',orderData,{headers:{token}})
+          if(responseRazorpay.data.success){
+            initPay(responseRazorpay.data.order)
+          }
+          break;
         default:
            break
       }
     } catch (error) {
-      
+      console.log(error)
+      toast.error(error.message)
     }
   }
   const handlePaymentMethodChange = (method) => {
@@ -112,20 +145,6 @@ const PlaceOrder = () => {
           </div>
 
           <div className='payment-options-row'>
-            {/* Stripe */}
-            <label className='payment-option-box' htmlFor='stripe'>
-              <input
-                type='radio'
-                id='stripe'
-                name='paymentMethod'
-                value='stripe'
-                className='hidden-radio'
-                checked={selectedPaymentMethod === 'stripe'}
-                onChange={() => handlePaymentMethodChange('stripe')}
-              />
-              <div className='custom-radio-circle'></div>
-              <img className='payment-option-logo' src={assets.stripe_logo} alt='Stripe' />
-            </label>
 
             {/* Razorpay */}
             <label className='payment-option-box' htmlFor='razorpay'>
@@ -154,7 +173,7 @@ const PlaceOrder = () => {
                 onChange={() => handlePaymentMethodChange('cod')}
               />
               <div className='custom-radio-circle'></div>
-              <p className='payment-option-text'>CASH ON DELIVERY</p>
+              <p className='payment-option-text'>COD</p>
             </label>
           </div>
 

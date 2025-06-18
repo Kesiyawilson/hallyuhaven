@@ -146,14 +146,7 @@ const Navbar = () => {
                                 {/* Show these options only if user is logged in */}
                                 {token && (
                                     <>
-                                        <Link to="/profile" style={{
-                                            display: 'block',
-                                            padding: '10px 15px',
-                                            color: '#555',
-                                            textDecoration: 'none',
-                                            whiteSpace: 'nowrap',
-                                            borderBottom: '1px solid #eee'
-                                        }}>My Profile</Link>
+                                         
                                         
                                         <Link to="/orders" style={{
                                             display: 'block',

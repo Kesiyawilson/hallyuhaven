@@ -1,22 +1,59 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { ShopContext } from '../context/ShopContext';
-import './RelatedProducts.css'; // <-- Add this line
+import './RelatedProducts.css';
 import Title from './Title';
 import ProductItem from './ProductItem';
 
-const RelatedProducts = ({ category, subCategory }) => {
+const RelatedProducts = ({ category, subCategory, currentProductId }) => {
   const { products } = useContext(ShopContext);
   const [related, setRelated] = useState([]);
 
   useEffect(() => {
     if (products.length > 0) {
       let productsCopy = products.slice();
-      productsCopy = productsCopy.filter((item) => category === item.category);
-      productsCopy = productsCopy.filter((item) => subCategory === item.subCategory);
-
-      setRelated(productsCopy.slice(0, 5));
+      
+ 
+      productsCopy = productsCopy.filter((item) => item._id !== currentProductId);
+      
+ 
+      let exactMatches = productsCopy.filter((item) =>
+        category === item.category && subCategory === item.subCategory
+      );
+      
+  
+      if (exactMatches.length >= 5) {
+        setRelated(exactMatches.slice(0, 5));
+        return;
+      }
+      
+     
+      let categoryMatches = productsCopy.filter((item) =>
+        category === item.category && subCategory !== item.subCategory
+      );
+      
+ 
+      if (exactMatches.length >= 3) {
+        setRelated(exactMatches.slice(0, 5));
+      }
+     
+      else if (exactMatches.length > 0) {
+        let combinedResults = [
+          ...exactMatches,
+          ...categoryMatches.slice(0, 5 - exactMatches.length)
+        ];
+        setRelated(combinedResults);
+      }
+ 
+      else {
+        setRelated(categoryMatches.slice(0, 5));
+      }
     }
-  }, [products, category, subCategory]);
+  }, [products, category, subCategory, currentProductId]);
+
+ 
+  if (related.length === 0) {
+    return null;
+  }
 
   return (
     <div className="related-products-section">
@@ -40,5 +77,3 @@ const RelatedProducts = ({ category, subCategory }) => {
 };
 
 export default RelatedProducts;
-
-
