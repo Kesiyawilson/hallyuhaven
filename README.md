@@ -26,7 +26,7 @@ On the administrative side, the platform includes a comprehensive admin dashboar
   Add, remove, or modify products in the shopping cart before checkout.
 
 - **Multiple Payment Methods:**  
-  Choose between Cash on Delivery or online payments via Stripe and Razorpay gateways for a secure and hassle-free transaction.
+  Choose between Cash on Delivery or online payments via Razorpay gateway for a secure and hassle-free transaction.
 
 - **Order Processing:**  
   Submit delivery information and track order status.
@@ -47,7 +47,7 @@ On the administrative side, the platform includes a comprehensive admin dashboar
 - **Frontend:** React.js — for building a responsive, dynamic, and interactive user interface.
 - **Backend:** Node.js and Express.js — for robust API development and server-side logic.
 - **Database:** MongoDB — a NoSQL database for flexible and scalable data storage.
-- **Payment Gateways:** Stripe and Razorpay — to support multiple secure online payment options.
+- **Payment Gateways:** Razorpay — to support secure online payment.
 - **Others:** Axios (for API requests), Redux or Context API (for state management), and CSS frameworks or styled-components for styling.
 
 ---
