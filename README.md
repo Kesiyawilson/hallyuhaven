@@ -48,7 +48,7 @@ On the administrative side, the platform includes a comprehensive admin dashboar
 - **Backend:** Node.js and Express.js — for robust API development and server-side logic.
 - **Database:** MongoDB — a NoSQL database for flexible and scalable data storage.
 - **Payment Gateways:** Razorpay — to support secure online payment.
-- **Others:** Axios (for API requests), Redux or Context API (for state management), and CSS frameworks or styled-components for styling.
+- **Others:** Axios (for API requests),  Context API (for state management), and CSS frameworks or styled-components for styling.
 
 ---
 
