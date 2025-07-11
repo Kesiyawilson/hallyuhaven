@@ -81,9 +81,6 @@ const Login = () => {
                     style={inputStyle}
                 />
 
-                <p style={{ fontSize: '14px', color: '#0077cc', margin: '10px 0', cursor: 'pointer' }}>
-                    Forgot your password?
-                </p>
 
                 <button type="submit" style={buttonStyle}>
                     {currentState === "Login" ? "Sign In" : "Sign Up"}
