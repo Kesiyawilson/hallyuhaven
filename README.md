@@ -52,6 +52,11 @@ On the administrative side, the platform includes a comprehensive admin dashboar
 
 ---
 
+## Links
+hallyuhaven-backend.vercel.app
+hallyuhaven-frontend.vercel.app
+hallyuhaven-admin.vercel.app
+
 ## Why HallyuHaven?
 
 The global K-pop fan community continues to grow rapidly, and with it, the demand for official merchandise that connects fans to their favorite idols. HallyuHaven aims to fill this niche by offering a reliable, user-friendly platform that combines a wide product selection with convenient shopping features and secure payment options.
