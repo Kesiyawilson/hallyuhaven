@@ -47,13 +47,24 @@ const Collection = () => {
     // Apply subcategory filters
     if (selectedSubcategories.length > 0) {
       currentFiltered = currentFiltered.filter((product) => {
-        const productCategorySub = (typeof product.category === 'string' && typeof product.subCategory === 'string') 
-                                   ? `${product.category}|${product.subCategory}` 
-                                   : null;
-        return productCategorySub && selectedSubcategories.includes(productCategorySub);
+        console.log('Product:', product.name);
+        console.log('  category:', product.category, 'type:', typeof product.category);
+        console.log('  subCategory:', product.subCategory, 'type:', typeof product.subCategory);
+    
+        const isCategoryString = typeof product.category === 'string' && product.category.trim() !== '';
+        const isSubCategoryValid = Array.isArray(product.subCategory) && product.subCategory.length > 0;
+    
+        if (!isCategoryString || !isSubCategoryValid) {
+          console.warn(`Skipping product "${product.name}" because category or subCategory missing or invalid`);
+          return false;
+        }
+    
+        // Use the first subCategory string for filtering
+        const productCategorySub = `${product.category.trim()}|${product.subCategory[0].trim()}`;
+        return selectedSubcategories.includes(productCategorySub);
       });
     }
-
+    
     // Apply sorting
     if (sortOption === 'lowToHigh') {
       currentFiltered.sort((a, b) => a.price - b.price);

@@ -10,6 +10,7 @@ const ShopContextProvider = (props) => {
     const currency = '$';
     const delivery_fee = 10; // Example shipping fee. Adjust as needed.
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    
 
     const [cartItems, setCartItems] = useState({});
     const [products, setProducts] = useState([]);
