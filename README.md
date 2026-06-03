@@ -6,7 +6,7 @@
 ## Project Demo
 
 🎥 Demo Video:
-https://drive.google.com/file/d/1RkLDYjhITr06Bc2IwrC7yyQnI06ai1u9/view?usp=sharing
+https://drive.google.com/file/d/1gwUVk-fGiwqYCidePRkWnJBm_fIwCE4a/view?usp=sharing
 
 ## Project Overview
 
