@@ -3,6 +3,10 @@
 **HallyuHaven** is a dedicated e-commerce platform designed especially for K-pop fans worldwide. The website offers an extensive collection of official and fan-favorite merchandise from all the major K-pop groups. From trendy clothing and stylish accessories to cute plushies, keychains, photocards, and iconic lightsticks, HallyuHaven is your one-stop shop for all things K-pop.
 
 ---
+## Project Demo
+
+🎥 Demo Video:
+https://drive.google.com/file/d/1RkLDYjhITr06Bc2IwrC7yyQnI06ai1u9/view?usp=sharing
 
 ## Project Overview
 
