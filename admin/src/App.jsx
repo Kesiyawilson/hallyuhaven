@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
-import { Routes, Route, Navigate } from 'react-router-dom'; // ✅ import Navigate
+import { Routes, Route, Navigate } from 'react-router-dom'; 
 import Add from './pages/Add';
 import List from './pages/List';
 import Orders from './pages/Orders';
@@ -22,7 +22,7 @@ const App = () => {
     <div className="bg-gray-50 min-h-screen">
       <ToastContainer />
 
-      {/* ✅ Only Login when NO token */}
+      {/*  Only Login when NO token */}
       {token === "" ? (
         <Login backendUrl={backendUrl} setToken={setToken} />
       ) : (
@@ -33,7 +33,7 @@ const App = () => {
             <Sidebar />
             <div className="w-[70%] mx-auto ml-[max(5vw,25px)] my-8 text-gray-600 text-base">
               <Routes>
-                {/* ✅ Add default route */}
+                {/* Add default route */}
                 <Route path="/" element={<Navigate to="/add" />} />
                 <Route path="/add" element={<Add token={token} />} />
                 <Route path="/list" element={<List token={token} />} />
