@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // ✅ for navigation
+import { useNavigate } from 'react-router-dom';
 import Title from '../components/Title';
 import './PlaceOrder.css';
 import CartTotal from '../components/CartTotal';
@@ -36,19 +36,30 @@ const PlaceOrder = () => {
       description:'Order Payment',
       order_id:order.id,
       receipt:order.receipt,
-      handler:async(response)=>{
-         console.log(response)
-         try {
-          const {data}=await axios.post(backendUrl+'/api/order/verifyRazorpay',response,{headers:{token}})
-          if(data.success){
-            navigate('/orders')
-            setCartItems({})
-          }
-         } catch (error) {
-          console.log(error)
-          toast.error(error.message)
-         }
-      }
+     handler: async (response) => {
+     try {
+     const { data } = await axios.post(
+      backendUrl + '/api/order/verifyRazorpay',
+      {
+        razorpay_order_id: response.razorpay_order_id,
+        razorpay_payment_id: response.razorpay_payment_id,
+        razorpay_signature: response.razorpay_signature,
+      },
+      { headers: { token } }
+    );
+
+    if (data.success) {
+      navigate('/orders');
+      setCartItems({});
+    } else {
+      toast.error(data.message);
+    }
+  } catch (error) {
+    console.log("Verify error:", error);
+    console.log(error.response?.data);
+    toast.error(error.message);
+  }
+}
      }
      const rzp=new window.Razorpay(options)
      rzp.open()
@@ -177,7 +188,7 @@ const PlaceOrder = () => {
             </label>
           </div>
 
-          {/* ✅ Place Order Button */}
+          {/* Place Order Button */}
           <button
           type='submit'
             className="place-order-button"
