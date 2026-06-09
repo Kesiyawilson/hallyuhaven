@@ -10,7 +10,7 @@ const Product = () => {
   const { products, currency,addToCart } = useContext(ShopContext);
   const [productData, setProductData] = useState(false);
   const [image, setImage] = useState('');
-  const[size,setSize]=useState('') // size state is managed
+  const[size,setSize]=useState('') 
 
   const fetchProductData = () => {
     products.map((item) => {
@@ -26,7 +26,7 @@ const Product = () => {
     fetchProductData();
   }, [productId]);
 
-  // Modified handleAddToCart to pass the hasSizes flag
+  //  handleAddToCart to pass the hasSizes flag
   const handleAddToCart = () => {
     // Determine if the current product has sizes by checking productData.sizes
     const productHasSizes = productData.sizes && productData.sizes.length > 0;
@@ -39,9 +39,9 @@ const Product = () => {
   return productData ? (
     <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100 product-section">
       <div className="flex gap-12 sm:gap-12 flex-col sm:flex-row">
-        {/* Thumbnails + Enlarged image + Title */}
+        
         <div className="product-display-wrapper">
-          {/* Thumbnails */}
+          
           <div className="product-thumbs-container">
             {productData.image.map((item, index) => (
               <img
@@ -54,7 +54,7 @@ const Product = () => {
             ))}
           </div>
 
-          {/* Enlarged Image */}
+            
           <div className="product-main-image-container">
             <img src={image} alt="" />
           </div>
@@ -88,12 +88,12 @@ const Product = () => {
               ))}
             </div>
           </div>
-) : ( // Optional: If no sizes, you might want to reset the size state or ensure it's empty
+) : (
   null
 )}
           <button onClick={handleAddToCart} className="add-to-cart-button">ADD TO CART</button>
           <hr className="product-divider" />
-          <div className="light-gray-text">
+          <div style={{ color: 'black', backgroundColor: 'white' }}>  
             <p>100% original product.</p>
             <p>Cash on delivery is available on this product.</p>
             <p>Easy return and exchange policy within 7 days.</p>
